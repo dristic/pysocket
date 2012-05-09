@@ -2,13 +2,15 @@ import tornado.ioloop
 import tornado.web
 import tornado.websocket
 
+import pysocket.user
+
 class PysocketHandler(tornado.websocket.WebSocketHandler):
-    _id = 1
+    _userManager = pysocket.user.UserManager()
     
     def open(self):
         print 'Socket connected'
-        self.write_message({ 'uid': self._id })
-        self._id += 1
+        uid = self._userManager.generate_user()
+        self.write_message({ 'uid': uid })
         
     def on_message(self, message):
         data = tornado.escape.json_decode(message)
@@ -19,7 +21,7 @@ class PysocketHandler(tornado.websocket.WebSocketHandler):
         print 'Socket disconnected'
         
 application = tornado.web.Application([
-  (r"/", PysocketHandler)                                       
+  (r"/", PysocketHandler)
 ])
 
 def start(port):
