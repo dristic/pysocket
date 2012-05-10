@@ -1,19 +1,9 @@
-var ws = new WebSocket('ws://localhost:8000'),
-    uid = -1;
-
-ws.onopen = function () {
+pysocket.ready(function () {
+  var user = new pysocket.User('ws://localhost:8000/');
   
-};
-
-ws.onmessage = function (evt) {
-  var data = JSON.parse(evt.data);
-  
-  if(data.uid) {
-    uid = data.uid;
-    console.log(uid);
-    ws.send(JSON.stringify({
-      uid: uid,
-      message: 'Hello, world' 
-    }));
-  }
-};
+  user.connect(function () {
+    user.login('Dan', 'password', function () {
+      console.log('Logged in!', user.uid, user.name);
+    });
+  });
+});
