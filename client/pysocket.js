@@ -167,6 +167,18 @@ window.pysocket = {};
     this.socket.send('login', message);
   };
   
+  User.prototype.message = function (message) {
+    this.socket.send('message', { text: message, user: this.name });
+  };
+  
+  User.prototype.on = function (name, callback) {
+    this.socket.on(name, callback);
+  };
+  
+  User.prototype.off = function (name, callback) {
+    this.socket.off(name, callback);
+  };
+  
   ///////////////////////
   // Message Handlers
   //////////////////////
