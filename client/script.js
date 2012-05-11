@@ -28,8 +28,8 @@ function setupUI() {
       submit = document.createElement('input'),
       body = document.getElementsByTagName('body')[0];
   
-  text.innerHTML = 'Welcome to pysocket chat <br />';
-  text.innerHTML += 'Type your message and hit send <br />';
+  text.innerHTML = '<b>Welcome to pysocket chat</b> <br />';
+  text.innerHTML += '<b>Type your message and hit send</b> <br />';
   
   input.type = 'text';
   

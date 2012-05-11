@@ -8,14 +8,14 @@ class PysocketHandler(tornado.websocket.WebSocketHandler):
     _handler = pysocket.handler.MessageHandler()
     
     def open(self):
-        print 'Socket connected'
+        self._handler.handleOpen(self.__hash__())
         
     def on_message(self, message):
         data = tornado.escape.json_decode(message)
-        self._handler.handleMessage(self.send, data)
+        self._handler.handleMessage(self.send, data, self.__hash__())
         
     def on_close(self):
-        print 'Socket disconnected'
+        self._handler.handleClose(self.__hash__())
         
     def send(self, name, message):
         message[u'__name'] = name
